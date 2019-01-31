@@ -1,0 +1,51 @@
+Cisco Packet Tracer 7.0 Sürümünü Redhat 7 veya CentOS 7 İşletim sisteminize kurmak için yapılacak işlemleri gerçekleştirelim.
+
+1- Repository ihtiyacımız var. Epel Repository bizim ihtiyacımızı karşılayacaktır
+Gerekçemiz ise;aşağıdaki kütüphane ve araçları hızlı bir şekilde bulup kurmamıza yardımcı olacak, en güncel ve güvenilir aracımızdır.
+-zlib-devel 
+-ncurses-devel 
+-gtk2 
+-glibc 
+-glibc-devel 
+-libstdc++ 
+-libX11-devel 
+-libXrender 
+-libXrandr 
+-libusb 
+-libXtst 
+-nss 
+-qt 
+-qtwebkit 
+-git
+
+Not: Ben bu listedeki araç ve kütüphaneleri farklı yollardan temin ederim, güncelliğini kendi mekanizmamla takip ederim diyebilen kişilerin, tabiki Epel kurmak gibi bir zorunluluğu olmayacaktır.
+
+Komut: sudo yum install epel-release
+
+2- Bu kütüphaneleri epel repository sayesinde aşağıdai komut ile tek seferde hızlıca kurabiliriz artık.
+
+Komut: sudo yum install zlib-devel ncurses-devel gtk2 glibc glibc-devel libstdc++ libX11-devel libXrender libXrandr libusb libXtst nss qt qtwebkit git
+
+3- Packet Tracer Programının Redhat için uyumlu sürümünü bulup edinmemiz gerekiyor. Üstteki kütüphane ve araçlar Packet Tracer 7.0 için uygun olduğu için bizde 7.0 sürümünü ediniyoruz.
+
+Komut: git clone https://github.com/AOSL/PACKETTRACER_CENTOS7.git
+
+4- Dosyalarımız arasında bulunan openssl kütüphanesini kuruyoruz. Çünkü programımız her açılışında, bir oturum sorgusu başlatıyor. Bu işlemin sağlıklı gerçekleşmesi için gerekecektir.
+
+Komut: cd  PACKETTRACER_CENTOS7
+Komut: sudo rpm -Uvh openssl-lib-compat-1.0.0i-1.fc24.x86_64.rpm
+
+5- İndirdiğimiz programın kurulumunu gerçekleştirebiliriz.
+Komut: cd PacketTracer70
+Komut: chmod +x  install
+Komut: ./install
+
+6- Kurulumunu tamamladığımız programın çalıştırılabilir hale getirmemiz gerekiyor.
+Komut: chmod +x /opt/pt/bin/PacketTracer7
+Komut: ldd /opt/pt/bin/PacketTracer7
+
+7- Terminalde bu programımızı çalıştırabilmek için /usr/bin klasörü altına linklememiz yeterli olacaktır.
+
+Komut: ln -s /opt/pt/bin/PacketTracer7 /usr/bin/packettracer
+
+Kaynak: http://troubleshoot4opensource.blogspot.com/
